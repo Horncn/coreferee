@@ -9,6 +9,7 @@ Author: <a href="mailto:richard@explosion.ai">Richard Paul Hudson, msg systems a
 		-   [1.2.2 French](#getting-started-fr)
         -   [1.2.3 German](#getting-started-de)
         -   [1.2.4 Polish](#getting-started-pl)
+			[1.2.5 Russian](#geting-started-ru)
     -   [1.3 Background information](#background-information)
     -   [1.4 Facts and figures](#facts-and-figures)
         -   [1.4.1 Covered relevant linguistic features](#covered-relevant-linguistic-features)
@@ -194,6 +195,41 @@ Then open a Python prompt (type `python3` or `python` at the command line):
 [Janek, żoną]
 >>>
 ```
+##### 1.2.5 Russian
+
+Presuming you have already installed [spaCy](https://spacy.io/) and one of the Russian spacy models, install Coreferee from the command line by typing:
+
+```
+python3 -m pip install coreferee
+python3 -m coreferee install ru
+```
+
+Note that the required command may be `python` rather than `python3` on some operating systems.
+
+Then open a Python prompt (type `python3` or `python` at the command line):
+
+```
+>>> import coreferee, spacy
+>>> nlp = spacy.load('ru_core_news_lg')
+>>> nlp.add_pipe('coreferee')
+<coreferee.manager.CorefereeBroker object at 0x0000027304C63B50>
+>>>
+>>> doc = nlp("Ponieważ bardzo zajęty był swoją pracą, Janek miał jej dość. Postanowili z jego żoną, że potrzebują wakacji. Pojechali do Hiszpanii, bo bardzo im się ten kraj podobał.")
+>>>
+>>> doc._.coref_chains.print()
+0: był(3), swoją(4), Janek(7), Postanowili(12), jego(14)
+1: pracą(5), jej(9)
+2: [Postanowili(12); żoną(15)], potrzebują(18), Pojechali(21), im(27)
+3: Hiszpanii(23), kraj(30)
+>>>
+>>> doc[12]._.coref_chains.print()
+0: był(3), swoją(4), Janek(7), Postanowili(12), jego(14)
+2: [Postanowili(12); żoną(15)], potrzebują(18), Pojechali(21), im(27)
+>>>
+>>> doc._.coref_chains.resolve(doc[27])
+[Janek, żoną]
+>>>
+```
 
 <a id="background-information"></a>
 #### 1.3 Background information
@@ -246,6 +282,7 @@ Coreferee started life to assist the [Holmes](https://github.com/msg-systems/hol
   <tr><td align="center">de</td><td align="center">German</td><td align="center"><i><b>Mein Freund</b> kam rein. <b>Er</b> war glücklich.</i><td align="center">-</td><td align="center"><i>Ich benutzte <b>das Auto</b> und hatte <b>damit</b> einige Probleme.</i></td><td align="center">Three singular (grammatical genders) and one plural class.</td><td align="center"><i><b>Peter und Maria</b></i></td><td align="center">-</td></tr>
   <tr><td align="center">fr</td><td align="center">French</td><td align="center"><i><b>Mon ami</b> entra. <b>Il</b> était heureux.</i><td align="center">-</td><td align="center">-</td><td align="center">Two singular (grammatical genders) and two plural (grammatical genders) classes.</td><td align="center"><i><b>Pierre et Marie</b></i></td><td align="center">-</td></tr>
    <tr><td align="center">pl</td><td align="center">Polish</td><td align="center"><i>Wszedł <b>mój kolega</b>. Widzieliście, jaki <b>on</b> był szczęśliwy?</i><td align="center"><i>Wszedł <b>mój kolega</b>. Szczęśliwy <b>był</b>.<sup>1</sup></i></td><td align="center">-<sup>2</sup></td><td align="center">Three singular (grammatical genders) and two plural (natural genders) classes.</td><td align="center"><i><b>Piotr i Kasia</b></i></td><td align="center">1) <i><b>Piotr z Kasią</b> przyjechali do Warszawy</i>; <br>2)&nbsp;<i>Widziałem Piotra i <b>przyszli z Kasią</i></b></td></tr>
+   <tr><td align="center">pl</td><td align="center">Russian</td><td align="center"><i> <b>Мой друг</b> пришел. <b>Он</b> был счастлив.</i><td align="center"><i>-</i></td><td align="center">-</td><td align="center">Three singular (grammatical genders) and one plural class.</td><td align="center"><i><b>Петр и Мария</b></i></td><td align="center"><i><b>Петр с Марией</b> </i></td></tr>
   </table>
 
 1. Only subject zero anaphors are covered. Object zero anaphors, e.g. <i>Wypiłeś <b>wodę</b>? Tak, <b>wypiłem.</b></i> are not in scope because they are mainly used colloquially and do not normally occur in the types of text for which [Coreferee is primarily designed](#background-information). Handling them would require creating or locating a detailed dictionary of verb valencies.
@@ -262,6 +299,7 @@ Coreferee started life to assist the [Holmes](https://github.com/msg-systems/hol
   <tr><td align="center">de</td><td align="center">German</td><td align="center"><a href="https://opus.nlpl.eu/ParCor/">ParCor</a></td><td align="center">164300</td><td align="center">-</td><td align="center">-</td><td align="center"><b>626</b></td><td align="center"><b>77.96</b></td><td align="center">630</td><td align="center">75.87</td><td align="center">611</td><td align="center">77.91</td></tr>
   <tr><td align="center">fr</td><td align="center">French</td><td align="center"><a href="https://www.ortolang.fr/market/corpora/democrat/v1.1">DEMOCRAT</a></td><td align="center">323754</td><td align="center">-</td><td align="center">-</td><td align="center"><b>2319</b></td><td align="center"><b>73.91</b></td><td align="center">2399</td><td align="center">73.91</td><td align="center">2216</td><td align="center">72.88</td></tr>
   <tr><td align="center">pl</td><td align="center">Polish</td><td align="center"><a href="http://zil.ipipan.waw.pl/PolishCoreferenceCorpus">PCC</a></td><td align="center">548268</td><td align="center">-</td><td align="center">-</td><td align="center"><b>1681</b></td><td align="center"><b>73.92</b></td><td align="center">1672</td><td align="center">71.98</td><td align="center">-</td><td align="center">-</td></tr>
+    <tr><td align="center">ru</td><td align="center">Russian</td><td align="center"><a href="https://github.com/max-ionov/rucoref">RuCoref</a> (<a href=https://github.com/Horncn/RuCoref-Spacy-adaptation>modified</a>)</td><td align="center">156636</td><td align="center">-</td><td align="center">-</td><td align="center">183</td><td align="center">73.77</td><td align="center"><b>176</b></td><td align="center"><b>75.57</b></td><td align="center">176</td><td align="center">73.86</td></tr>
 </table>
 
 Coreferee produces a range of neural-network models for each language corresponding to the various spaCy models for that language. The [neural network inputs](#the-neural-ensemble) include word vectors. With `_sm` (small) models, both spaCy and Coreferee use context-sensitive tensors as an alternative to word vectors. `_trf` (transformer-based) models, on the other hand, do not use or offer word vectors at all. To remedy this problem, the model configuration files (`config.cfg` in the directory for each language) allow a **vectors model** to be specified for use when a main model does not have its own vectors. Coreferee then combines the linguistic information generated by the main model with vector information returned for the individual words in each document by the vectors model.

@@ -9,7 +9,7 @@ Author: <a href="mailto:richard@explosion.ai">Richard Paul Hudson, msg systems a
 		-   [1.2.2 French](#getting-started-fr)
         -   [1.2.3 German](#getting-started-de)
         -   [1.2.4 Polish](#getting-started-pl)
-		-    [1.2.5 Russian](#geting-started-ru)
+		-    [1.2.5 Russian](#getting-started-ru)
     -   [1.3 Background information](#background-information)
     -   [1.4 Facts and figures](#facts-and-figures)
         -   [1.4.1 Covered relevant linguistic features](#covered-relevant-linguistic-features)
@@ -195,6 +195,7 @@ Then open a Python prompt (type `python3` or `python` at the command line):
 [Janek, żoną]
 >>>
 ```
+<a id="getting-started-ru"></a>
 ##### 1.2.5 Russian
 
 Presuming you have already installed [spaCy](https://spacy.io/) and one of the Russian spacy models, install Coreferee from the command line by typing:

@@ -9,7 +9,7 @@ Author: <a href="mailto:richard@explosion.ai">Richard Paul Hudson, msg systems a
 		-   [1.2.2 French](#getting-started-fr)
         -   [1.2.3 German](#getting-started-de)
         -   [1.2.4 Polish](#getting-started-pl)
-			[1.2.5 Russian](#geting-started-ru)
+		-    [1.2.5 Russian](#geting-started-ru)
     -   [1.3 Background information](#background-information)
     -   [1.4 Facts and figures](#facts-and-figures)
         -   [1.4.1 Covered relevant linguistic features](#covered-relevant-linguistic-features)

@@ -37,7 +37,8 @@ class RussianRulesTest(unittest.TestCase):
             func(nlp)
 
     def compare_get_dependent_sibling_info(self, doc_text, index, expected_dependent_siblings,
-                                           expected_governing_sibling, expected_has_or_coordination=None,
+                                           expected_governing_sibling,
+                                           expected_has_or_coordination=None,
                                            *, excluded_nlps=[]):
 
         def func(nlp):
@@ -50,7 +51,8 @@ class RussianRulesTest(unittest.TestCase):
             self.assertEqual(expected_dependent_siblings, str(
                 doc[index]._.coref_chains.temp_dependent_siblings), nlp.meta['name'])
             for sibling in (sibling for sibling in
-                            doc[index]._.coref_chains.temp_dependent_siblings if sibling.i != index):
+                            doc[index]._.coref_chains.temp_dependent_siblings if
+                            sibling.i != index):
                 self.assertEqual(doc[index], sibling._.coref_chains.temp_governing_sibling,
                                  nlp.meta['name'])
             if expected_governing_sibling is None:
@@ -108,8 +110,9 @@ class RussianRulesTest(unittest.TestCase):
                                                 '[Петр, Сергей]', None, True)
 
     def test_get_dependent_sibling_info_conjunction_itself(self):
-        self.compare_get_dependent_sibling_info('Встреча с Василием, Петром и Сергеем состоялась вчера.', 3,
-                                                '[]', None, False)
+        self.compare_get_dependent_sibling_info(
+            'Встреча с Василием, Петром и Сергеем состоялась вчера.', 3,
+            '[]', None, False)
 
     def test_get_dependent_sibling_other_instrumental(self):
         self.compare_get_dependent_sibling_info(
@@ -261,7 +264,6 @@ class RussianRulesTest(unittest.TestCase):
     def test_pleonastic_pronoun(self):
         self.compare_potential_anaphor('Он сказал мне о том, что его приняли работу', [0, 2, 4, 7])
 
-
     def compare_potential_pair(self, doc_text, referred_index, include_dependent_siblings,
                                referring_index, expected_truth, *, excluded_nlps=[], directly=True):
 
@@ -319,7 +321,6 @@ class RussianRulesTest(unittest.TestCase):
     def test_two_singular_objects_same_gender_with_plural_referring_pronoun_2(self):
         self.compare_potential_pair('Я увидел девочку и женщину, они гуляли', 4, False, 6, 2)
 
-
     def test_two_singular_objects_same_gender_inanimate_with_plural_referring_pronoun_2(self):
         self.compare_potential_pair('Я увидел кисть и краску, они лежали', 4, False, 6, 2)
 
@@ -362,21 +363,25 @@ class RussianRulesTest(unittest.TestCase):
     def test_potential_pair_and_conjunction_with_names_and_referred_singular_referring(self):
         self.compare_potential_pair('Я увидел Петра и Анну. Он был там', 2, True, 6, 2)
 
-    def test_potential_pair_and_conjunction_with_names_and_referred_singular_referring_control(self):
+    def test_potential_pair_and_conjunction_with_names_and_referred_singular_referring_control(
+            self):
         self.compare_potential_pair('Я увидел Петра и Анну. Он был там', 4, False, 6, 0,
                                     excluded_nlps=['core_news_md', 'core_news_sm'])
 
     def test_potential_pair_and_conjunction_with_names_with_referred_singular_referring(self):
         self.compare_potential_pair('Я увидел Петра с Анной. Он был там', 2, True, 6, 2)
 
-    def test_potential_pair_and_conjunction_with_names_with_referred_singular_referring_control(self):
+    def test_potential_pair_and_conjunction_with_names_with_referred_singular_referring_control(
+            self):
         self.compare_potential_pair('Я увидел Петра с Анной. Он был там', 4, False, 6, 0)
 
-    def test_potential_pair_and_conjunction_with_names_and_referred_singular_referring_control_2(self):
+    def test_potential_pair_and_conjunction_with_names_and_referred_singular_referring_control_2(
+            self):
         self.compare_potential_pair('Я увидел Петра и Анну. Она была там', 4, False, 6, 2,
                                     excluded_nlps=['core_news_sm'])
 
-    def test_potential_pair_and_conjunction_with_names_with_referred_singular_referring_control_2(self):
+    def test_potential_pair_and_conjunction_with_names_with_referred_singular_referring_control_2(
+            self):
         self.compare_potential_pair('Я увидел Петра с Анной. Она была там', 4, False, 6, 2)
 
     def test_potental_pair_two_antecedent_pronouns_with_plural_referring(self):
@@ -449,7 +454,8 @@ class RussianRulesTest(unittest.TestCase):
         self.compare_potential_pair('Мужчина и ее коллега', 0, False, 2, 0)
 
     def test_potential_pair_with_definite_adjective(self):
-        self.compare_potential_pair('Мужчина и тот коллега', 0, False, 2, 0, excluded_nlps=['core_news_sm'])
+        self.compare_potential_pair('Мужчина и тот коллега', 0, False, 2, 0,
+                                    excluded_nlps=['core_news_sm'])
 
     def test_potential_pair_with_substantive_definite_adjective(self):
         self.compare_potential_pair('Я видел его. Тот был там', 2, False, 4, 2)
@@ -482,7 +488,8 @@ class RussianRulesTest(unittest.TestCase):
         self.compare_potential_pair('Вы посетили много стран. Вы облетели весь мир', 0, False, 5, 2)
 
     def test_potential_pair_two_pronouns_same_person_3(self):
-        self.compare_potential_pair('Мы облетели всю страну. Нас удивила ее красота', 0, False, 5, 2)
+        self.compare_potential_pair('Мы облетели всю страну. Нас удивила ее красота', 0, False, 5,
+                                    2)
 
     def test_potential_pair_acronym(self):
         self.compare_potential_pair('В здании КГБ его приняли на работу', 2, False, 3, 0)
@@ -513,10 +520,12 @@ class RussianRulesTest(unittest.TestCase):
         self.compare_potential_pair('Мужчина с портфелем, который все видели', 0, False, 4, 0)
 
     def test_potential_pair_subject_in_instrumental_case_one_referring_pronoun_same_gender(self):
-        self.compare_potential_pair('Мужчина с портфелем, из которого была видна книга', 2, False, 5, 2)
+        self.compare_potential_pair('Мужчина с портфелем, из которого была видна книга', 2, False,
+                                    5, 2)
 
     def test_potential_pair_subject_in_instrumental_case_one_referring_pronoun_same_gender_2(self):
-        self.compare_potential_pair('Мужчина с портфелем, из которого была видна книга', 0, False, 5, 0)
+        self.compare_potential_pair('Мужчина с портфелем, из которого была видна книга', 0, False,
+                                    5, 0)
 
     def test_potential_pair_pronouns_different_person(self):
         self.compare_potential_pair('Мы шли. Они бежали', 0, False, 3, 0)
@@ -537,35 +546,43 @@ class RussianRulesTest(unittest.TestCase):
         self.compare_potential_pair('Я вижу своего друга. Он гуляет.', 3, False, 5, 2)
 
     def test_potential_pair_sentence_with_subject_after_object(self):
-        self.compare_potential_pair('Она читала книгу, которая вышла в прошлом году', 0, False, 4, 0)
+        self.compare_potential_pair('Она читала книгу, которая вышла в прошлом году', 0, False, 4,
+                                    0)
 
     def test_potential_pair_sentence_with_subject_after_object_2(self):
-        self.compare_potential_pair('Она читала книгу, которая вышла в прошлом году', 2, False, 4, 2)
+        self.compare_potential_pair('Она читала книгу, которая вышла в прошлом году', 2, False, 4,
+                                    2)
 
     def test_potential_pair_sentence_with_subject_after_object_3(self):
-        self.compare_potential_pair('Люди пишут о книгах, которые прочли в прошлом году', 0, False, 5, 0)
+        self.compare_potential_pair('Люди пишут о книгах, которые прочли в прошлом году', 0, False,
+                                    5, 0)
 
     def test_potential_pair_sentence_with_subject_after_object_4(self):
-        self.compare_potential_pair('Люди пишут о книгах, которые прочли в прошлом году', 3, False, 5, 2)
+        self.compare_potential_pair('Люди пишут о книгах, которые прочли в прошлом году', 3, False,
+                                    5, 2)
 
     def test_potential_pair_noun_with_possesive_pronoun_related_to_other_object(self):
         self.compare_potential_pair('Рассказ был написан моим другом', 0, False, 3, 0)
 
     def test_potential_pair_two_subject_one_referring_pronoun_same_gender(self):
-        self.compare_potential_pair('Друг написал картину и книгу, которую потом опубликовали', 2, False, 6, 0)
+        self.compare_potential_pair('Друг написал картину и книгу, которую потом опубликовали', 2,
+                                    False, 6, 0)
 
     def test_potential_pair_two_subject_one_referring_pronoun_same_gender_2(self):
-        self.compare_potential_pair('Друг написал картину и книгу, которую потом опубликовали', 4, False, 6, 2)
+        self.compare_potential_pair('Друг написал картину и книгу, которую потом опубликовали', 4,
+                                    False, 6, 2)
 
     def test_potential_pair_which_with_object_in_plural_form(self):
-        self.compare_potential_pair('Вам помогут разобраться люди, которые живут работой', 3, False, 5, 2)
+        self.compare_potential_pair('Вам помогут разобраться люди, которые живут работой', 3, False,
+                                    5, 2)
 
     def test_potential_pair_which_with_object_in_plural_form_2(self):
-        self.compare_potential_pair('Вам помогут разобраться люди, которые живут книгами', 3, False, 5, 2)
+        self.compare_potential_pair('Вам помогут разобраться люди, которые живут книгами', 3, False,
+                                    5, 2)
 
     def test_potential_pair_which_with_object_in_plural_form_3(self):
-        self.compare_potential_pair('Вам помогут разобраться люди, которые живут книгами', 7, False, 5, 0)
-
+        self.compare_potential_pair('Вам помогут разобраться люди, которые живут книгами', 7, False,
+                                    5, 0)
 
     def test_potential_pair_multiple_objects_with_which_and_possesive_adjective_2(self):
         self.compare_potential_pair('Я видел кошку и кота, которые виляли своими хвостами.',
@@ -575,12 +592,13 @@ class RussianRulesTest(unittest.TestCase):
         self.compare_potential_pair('Я видел кошку и кота, которые виляли своими хвостами.',
                                     6, False, 8, 2)
 
-
     def test_potential_pair_reflexive_pronoun_different_gender(self):
-        self.compare_potential_pair('Появилась компания, которая своим видом всех напугала', 1, False, 4, 2)
+        self.compare_potential_pair('Появилась компания, которая своим видом всех напугала', 1,
+                                    False, 4, 2)
 
     def test_potential_pair_complex_number_name_with_reduction(self):
-        self.compare_potential_pair('Мужчина потратил один млн. на книги. Он доволен', 3, False, 8, 0)
+        self.compare_potential_pair('Мужчина потратил один млн. на книги. Он доволен', 3, False, 8,
+                                    0)
 
     def test_potential_pair_plural_noun_with_nummod(self):
         self.compare_potential_pair('Я видел пять мужчин. Они гуляли', 3, False, 5, 2)
@@ -685,10 +703,6 @@ class RussianRulesTest(unittest.TestCase):
     def test_potential_pair_nmod_conjuction_with_reflexive_pronoun_2(self):
         self.compare_potential_pair('Кошка c собакой преследовали себя', 2, False, 4, 2)
 
-
-
-
-
     def compare_potential_reflexive_pair(self, doc_text, referred_index, include_dependent_siblings,
                                          referring_index, expected_truth, expected_reflexive_truth,
                                          is_reflexive_anaphor_truth, *, excluded_nlps=[]):
@@ -736,8 +750,6 @@ class RussianRulesTest(unittest.TestCase):
     def test_potentially_introducing_with_ten_and_relative_clause(self):
         self.compare_potentially_introducing('Он живет с коллегой, которого вы знаете.', 3, True)
 
-
-
     def compare_potentially_referring_back_noun(self, doc_text, index, expected_truth, *,
                                                 excluded_nlps=[]):
 
@@ -757,7 +769,8 @@ class RussianRulesTest(unittest.TestCase):
         self.compare_potentially_referring_back_noun('Он живет с этим коллегой', 4, True)
 
     def test_potentially_referring_back_noun_with_ten_and_relative_clause_control(self):
-        self.compare_potentially_referring_back_noun('Он живет с коллегой, которого вы знаете', 3, False)
+        self.compare_potentially_referring_back_noun('Он живет с коллегой, которого вы знаете', 3,
+                                                     False)
 
 
 if __name__ == '__main__':

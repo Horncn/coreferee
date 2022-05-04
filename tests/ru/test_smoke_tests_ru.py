@@ -57,7 +57,8 @@ class RussianSmokeTest(unittest.TestCase):
 
     def test_simple_conjunction_different_words(self):
         self.compare_annotations(
-            'Я увидел коня и собаку, они преследовали кошку.', '[0: [2, 4], [6]]')
+            'Я увидел коня и собаку, они преследовали кошку.', '[0: [2, 4], [6]]',
+            excluded_nlps=['core_news_md'])
 
     def test_simple_nmod_conjuntion_same_words(self):
         self.compare_annotations(
@@ -70,11 +71,16 @@ class RussianSmokeTest(unittest.TestCase):
     def test_conjunction_different_pronouns(self):
         self.compare_annotations(
             'Я увидел Петра и Анну, она и он преследовали кошку.', '[0: [2], [8], 1: [4], [6]]',
-            )
+        )
 
     def test_conjunction_involving_pronoun(self):
         self.compare_annotations(
             'Я увидел Сергея и Анну. Она преследовала кошку.', '[0: [4], [6]]',
+            excluded_nlps=['core_news_sm'])
+
+    def test_conjunction_involving_pronoun_2(self):
+        self.compare_annotations(
+            'Я увидел Сергея и Анну. Он преследовал кошку.', '[0: [2], [6]]',
             excluded_nlps=['core_news_sm'])
 
     def test_different_sentence(self):
@@ -102,6 +108,14 @@ class RussianSmokeTest(unittest.TestCase):
             'Я видел собаку. Она преследовала кошку, которая виляла своим хвостом',
             '[0: [2], [4], 1: [6], [8], [10]]')
 
+    def test_conjunction_same_words_with_which(self):
+        self.compare_annotations('Я увидел собаку c собакой, которые преследовали кошку.',
+                                 '[0: [2, 4], [6]]')
+
+    def test_conjunction_different_words_with_which(self):
+        self.compare_annotations('Я увидел коня c собакой, которые преследовали кошку.',
+                                 '[0: [2, 4], [6]]')
+
     def test_which_with_multiple_antecedents(self):
         self.compare_annotations(
             'Я видел кошку и кота, которые виляли своими хвостами',
@@ -116,11 +130,6 @@ class RussianSmokeTest(unittest.TestCase):
         self.compare_annotations(
             'Кошка увидела себя',
             '[0: [0], [2]]')
-
-    def test_reflexive_coordination(self):
-        self.compare_annotations(
-            'Кошка и собака преследовали себя',
-            '[0: [0, 2], [4]]')
 
     def test_reflexive_excluded_mix_of_coordination_and_single_member_1(self):
         self.compare_annotations(
@@ -153,8 +162,14 @@ class RussianSmokeTest(unittest.TestCase):
             '[0: [0], [6], 1: [4], [9]]'
         )
 
-    # def test_documentation_example_2(self):
-    #     self.compare_annotations(
-    #         'Она была в Испании. Ей нравилась эта страна. Она часто об этом говорила',
-    #         '[0: [0], [5], [10], 1: [3], [8]]'
-    #     )
+    def test_documentation_example_2(self):
+        self.compare_annotations(
+            'Я видел мужчину, чья собака гуляла. Она виляла своим хвостом',
+            '[0: [2], [4], 1: [5], [8], [10]]'
+        )
+
+    def test_documentation_example_3(self):
+        self.compare_annotations(
+            'Хотя они добрались до их дома, Петр и Анна грустили. Он ушел спать. Она взяла свою любимую книгу, которую купила давно.',
+            '[0: [1], [4], [7, 9], 1: [7], [12], 2: [9], [16], [18], 3: [20], [22]]')
+

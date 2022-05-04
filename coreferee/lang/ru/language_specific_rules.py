@@ -218,7 +218,8 @@ class LanguageSpecificRulesAnalyzer(RulesAnalyzer):
         if len(all_involved_referreds) > 1:
 
             if len(referreds_included_here) == len(all_involved_referreds):
-                return 1 if uncertain else 2
+                if not self.has_morph(referring, 'Gender', 'Fem'):
+                    return 1 if uncertain else 2
 
             referred_masc, referred_fem, referred_neut = get_gender_number_info(referred_root)
 
@@ -226,7 +227,7 @@ class LanguageSpecificRulesAnalyzer(RulesAnalyzer):
                                         referred_root._.coref_chains.temp_dependent_siblings if
                                         child.i != referring.i and
                                         referred_root.pos_ in ('VERB', 'AUX') and
-                                        self.has_morph(referred_root, 'Number', 'Plur') and
+                                        self.has_morph(referring, 'Number', 'Plur') and
                                         not (self.has_morph(referring, 'Person', 'First')
                                              or self.has_morph(referring, 'Person', 'Second'))]
             if not directly and len(referred_comitative_siblings):
@@ -238,23 +239,26 @@ class LanguageSpecificRulesAnalyzer(RulesAnalyzer):
             referred_fem = referred_fem or working_fem
             referred_neut = referred_neut or working_neut
 
-        if not (referred_masc and referring_masc) and not (referred_fem and referring_fem) \
-                and not (referred_neut and referring_neut):
-            if not referring.lemma_ == 'чей':
+        if not referring.lemma_ == 'чей':
+
+            if not (referred_masc and referring_masc) and not (referred_fem and referring_fem) \
+                    and not (referred_neut and referring_neut):
                 if not (self.is_reflexive_possessive_pronoun(referring)):
                     return 0
 
+
+            # for the unknown reason previous check was not enough
+            if (referred_root.lemma_.capitalize()  in self.male_names and \
+                    self.has_morph(referring, 'Gender', 'Fem')) or \
+                    (referred_root.lemma_.capitalize()  in self.female_names and \
+                    self.has_morph(referring, 'Gender', 'Masc')):
+                return 0
+
         if referred_masc + referred_fem + referred_neut != \
                 referring_masc + referring_fem + referring_neut:
-            # if referred_masc + referred_fem + referred_neut > \
-            #         referring_masc + referring_fem + referring_neut:
-            #     if self.has_morph(referred_root, 'Number', 'Plur'):
-            #         return 0
-            #     if get_gender_number_info(referred_root) != get_gender_number_info(referring):
-            #         return 0
 
             if referred_root.dep_ not in self.dependent_sibling_deps:
-                if self.has_morph(referring, 'Number', 'Plur') or \
+                if sum(get_gender_number_info(referring)) > 2 or \
                         self.is_reflexive_possessive_pronoun(referring):
                     if not self.has_morph(referred_root, 'Case', 'Ins') and \
                             self.has_morph(referred_root, 'Animacy', 'Anim') >= \
@@ -276,11 +280,6 @@ class LanguageSpecificRulesAnalyzer(RulesAnalyzer):
                     else:
                         return 0
 
-        # try:
-        #     if referred_root.nbor() == referring:
-        #         return 0
-        # except IndexError:
-        #     pass
 
         if referred_root.dep_ == 'obj':
             if [child for child in referred_root.children if
@@ -291,14 +290,11 @@ class LanguageSpecificRulesAnalyzer(RulesAnalyzer):
                     # identify female names as masculine proper nouns
                     # so need to implement additional check for that
                     if [child for child in referred_root.children if
-                        child.lemma_ in self.female_names and
+                        child.lemma_.capitalize() in self.female_names and
                         self.has_morph(child, 'Gender', 'Masc')] and \
                             self.has_morph(referring, 'Gender', 'Masc'):
                         return 0
 
-        if referred_root.lemma_ in self.female_names and \
-                self.has_morph(referring, 'Gender', 'Masc'):
-            return 0
 
         if [child for child in referred_root.children if child.dep_ == 'advmod']:
             if [child for child in referred_root.children if child.lemma_ == 'но']:

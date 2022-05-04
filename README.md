@@ -302,6 +302,7 @@ Coreferee started life to assist the [Holmes](https://github.com/msg-systems/hol
   <tr><td align="center">pl</td><td align="center">Polish</td><td align="center"><a href="http://zil.ipipan.waw.pl/PolishCoreferenceCorpus">PCC</a></td><td align="center">548268</td><td align="center">-</td><td align="center">-</td><td align="center"><b>1681</b></td><td align="center"><b>73.92</b></td><td align="center">1672</td><td align="center">71.98</td><td align="center">-</td><td align="center">-</td></tr>
     <tr><td align="center">ru</td><td align="center">Russian</td><td align="center"><a href="https://github.com/Koziev/NLP_Datasets/tree/master/Anacoref">RuCoref</a><sup>1</sup> (<a href=https://github.com/Horncn/RuCoref-Spacy-adaptation>modified</a><sup>2</sup>)</td><td align="center">156636</td><td align="center">-</td><td align="center">-</td><td align="center">183</td><td align="center">73.77</td><td align="center"><b>176</b></td><td align="center"><b>75.57</b></td><td align="center">176</td><td align="center">73.86</td></tr>
 </table>
+
 1. Unfortunately, there is no official page of this corpus today. It can only be found on github.
 2. Modification reduces amount of conflicts between original annotation and spacy models.
 

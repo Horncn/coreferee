@@ -158,7 +158,7 @@ class RussianSmokeTest(unittest.TestCase):
 
     def test_documentation_example_1(self):
         self.compare_annotations(
-            'Женщина встала и удивела Петра. Она поздоровалась с ним',
+            'Женщина встала и увидела Петра. Она поздоровалась с ним',
             '[0: [0], [6], 1: [4], [9]]'
         )
 

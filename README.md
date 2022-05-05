@@ -6,10 +6,10 @@ Author: <a href="mailto:richard@explosion.ai">Richard Paul Hudson, msg systems a
     -   [1.1 The basic idea](#the-basic-idea)
     -   [1.2 Getting started](#getting-started)
         -   [1.2.1 English](#getting-started-en)
-	-   [1.2.2 French](#getting-started-fr)
+        -   [1.2.2 French](#getting-started-fr)
         -   [1.2.3 German](#getting-started-de)
         -   [1.2.4 Polish](#getting-started-pl)
-	-   [1.2.5 Russian](#getting-started-ru)
+        -   [1.2.5 Russian](#getting-started-ru)
     -   [1.3 Background information](#background-information)
     -   [1.4 Facts and figures](#facts-and-figures)
         -   [1.4.1 Covered relevant linguistic features](#covered-relevant-linguistic-features)
@@ -316,7 +316,7 @@ Coreferee started life to assist the [Holmes](https://github.com/msg-systems/hol
   <tr><td align="center">de</td><td align="center">German</td><td align="center"><a href="https://opus.nlpl.eu/ParCor/">ParCor</a></td><td align="center">164300</td><td align="center">-</td><td align="center">-</td><td align="center"><b>530—570</b></td><td align="center"><b>79—80</b></td><td align="center">520—550</td><td align="center">79—80</td><td align="center">530—550</td><td align="center">76—79</td></tr>
   <tr><td align="center">fr</td><td align="center">French</td><td align="center"><a href="https://www.ortolang.fr/market/corpora/democrat/v1.1">DEMOCRAT</a></td><td align="center">323754</td><td align="center">-</td><td align="center">-</td><td align="center"><b>1270—1280</b></td><td align="center"><b>71—72</b></td><td align="center">1280—1300</td><td align="center">68—70</td><td align="center">1130—1140</td><td align="center">63—64</td></tr>
   <tr><td align="center">pl</td><td align="center">Polish</td><td align="center"><a href="http://zil.ipipan.waw.pl/PolishCoreferenceCorpus">PCC</a></td><td align="center">548268</td><td align="center">-</td><td align="center">-</td><td align="center"><b>1730—1790</b></td><td align="center"><b>72—76</b></td><td align="center">1750—1790</td><td align="center">70—75</td><td align="center">-</td><td align="center">-</td></tr>
-  <tr><td align="center">ru</td><td align="center">Russian</td><td align="center"><a href="https://github.com/Koziev/NLP_Datasets/tree/master/Anacoref">RuCoref</a><sup>1</sup> (<a href=https://github.com/Horncn/RuCoref-Spacy-adaptation>modified</a><sup>2</sup>)</td><td align="center">156636</td><td align="center">-</td><td align="center">-</td><td align="center">170-190</td><td align="center">71-74</td><td align="center"><b>170-190</b></td><td align="center"><b>73-76</b></td><td align="center">170-190</td><td align="center">71-74</td></tr>
+  <tr><td align="center">ru</td><td align="center">Russian</td><td align="center"><a href="https://github.com/Koziev/NLP_Datasets/tree/master/Anacoref">RuCoref</a><sup>1</sup> (<a href=https://github.com/Horncn/RuCoref-Spacy-adaptation>modified</a><sup>2</sup>)</td><td align="center">156636</td><td align="center">-</td><td align="center">-</td><td align="center">170—190</td><td align="center">71—74</td><td align="center"><b>170—190</b></td><td align="center"><b>73—76</b></td><td align="center">170—190</td><td align="center">71—74</td></tr>
 </table>
 
 1. Unfortunately, there is no official page of this corpus today. It can only be found on github.

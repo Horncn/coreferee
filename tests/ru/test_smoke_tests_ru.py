@@ -53,12 +53,13 @@ class RussianSmokeTest(unittest.TestCase):
 
     def test_simple_conjunction_same_word(self):
         self.compare_annotations(
-            'Я увидел собаку и собаку, они преследовали кошку.', '[0: [2, 4], [6]]')
+            'Я увидел собаку и собаку, они преследовали кошку.', '[0: [2, 4], [6]]',
+        excluded_nlps=['core_news_sm'])
 
     def test_simple_conjunction_different_words(self):
         self.compare_annotations(
             'Я увидел коня и собаку, они преследовали кошку.', '[0: [2, 4], [6]]',
-            excluded_nlps=['core_news_md'])
+            excluded_nlps=['core_news_md', 'core_news_sm'])
 
     def test_simple_nmod_conjuntion_same_words(self):
         self.compare_annotations(
@@ -71,17 +72,16 @@ class RussianSmokeTest(unittest.TestCase):
     def test_conjunction_different_pronouns(self):
         self.compare_annotations(
             'Я увидел Петра и Анну, она и он преследовали кошку.', '[0: [2], [8], 1: [4], [6]]',
-        )
+            excluded_nlps=['core_news_md'])
 
     def test_conjunction_involving_pronoun(self):
         self.compare_annotations(
             'Я увидел Сергея и Анну. Она преследовала кошку.', '[0: [4], [6]]',
-            excluded_nlps=['core_news_sm'])
+            excluded_nlps=['core_news_lg', 'core_news_md'])
 
     def test_conjunction_involving_pronoun_2(self):
         self.compare_annotations(
-            'Я увидел Сергея и Анну. Он преследовал кошку.', '[0: [2], [6]]',
-            excluded_nlps=['core_news_sm'])
+            'Я увидел Сергея и Анну. Он преследовал кошку.', '[0: [2], [6]]')
 
     def test_different_sentence(self):
         self.compare_annotations(
@@ -119,7 +119,7 @@ class RussianSmokeTest(unittest.TestCase):
     def test_which_with_multiple_antecedents(self):
         self.compare_annotations(
             'Я видел кошку и кота, которые виляли своими хвостами',
-            '[0: [2, 4], [6], [8]]')
+            '[0: [2, 4], [6], [8]]', excluded_nlps=['core_news_sm'])
 
     def test_two_objects_same_gender_with_which(self):
         self.compare_annotations(
@@ -151,10 +151,15 @@ class RussianSmokeTest(unittest.TestCase):
             'Хотя он устал, Петр пошел в парк.',
             '[0: [1], [4]]')
 
+    def test_first_and_second_person_conjunction_control(self):
+        self.compare_annotations(
+            'Я и ты в парке. Они гуляли',
+            '[]', excluded_nlps=['core_news_md', 'core_news_sm'])
+
     def test_cataphora_with_coordination(self):
         self.compare_annotations(
             'Хотя они добрались до их дома, мужчина и женщина грустили',
-            '[0: [1], [4], [7, 9]]')
+            '[0: [1], [4], [7, 9]]', excluded_nlps=['core_news_sm'])
 
     def test_documentation_example_1(self):
         self.compare_annotations(
@@ -173,3 +178,5 @@ class RussianSmokeTest(unittest.TestCase):
             'Хотя они добрались до их дома, Петр и Анна грустили. Он ушел спать. Она взяла свою любимую книгу, которую купила давно.',
             '[0: [1], [4], [7, 9], 1: [7], [12], 2: [9], [16], [18], 3: [20], [22]]')
 
+if __name__ == '__main__':
+    unittest.main()

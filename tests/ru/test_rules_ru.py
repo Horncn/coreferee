@@ -178,7 +178,7 @@ class RussianRulesTest(unittest.TestCase):
 
     def test_potentially_indefinite_with_indefinite_determinant(self):
         self.compare_potentially_indefinite('Я говорил с каким-то братом', 6, True,
-                                            excluded_nlps=['core_news_md', 'core_news_lg'])
+                                            excluded_nlps=[])
 
     def test_potentially_indefinite_common_noun_with_possessive_pronoun(self):
         self.compare_potentially_indefinite('Я говорил с твоим братом', 4, False)
@@ -430,8 +430,7 @@ class RussianRulesTest(unittest.TestCase):
         self.compare_potential_pair('Я видел женщину. Он был там', 2, False, 4, 0)
 
     def test_potential_pair_he_exclusively_female_name_antecedent(self):
-        self.compare_potential_pair('Я видел Лену. Он был там', 2, False, 4, 0,
-                                    excluded_nlps=['core_news_sm'])
+        self.compare_potential_pair('Я видел Анну. Он был там', 2, False, 4, 0)
 
     def test_potential_pair_he_exclusively_male_name_compound_antecedent(self):
         self.compare_potential_pair('Я видел Иванова Петра. Он был там', 3, True, 5, 2)
@@ -440,12 +439,10 @@ class RussianRulesTest(unittest.TestCase):
         self.compare_potential_pair('Я видел Иванова Петра. Она была там', 3, False, 5, 0)
 
     def test_potential_pair_she_exclusively_female_name_compound_antecedent(self):
-        self.compare_potential_pair('Я видел Иванову Лену. Она была там', 3, False, 5, 2,
-                                    excluded_nlps=['core_news_sm'])
+        self.compare_potential_pair('Я видел Иванову Анна. Она была там', 3, False, 5, 2)
 
     def test_potential_pair_he_exclusively_female_name_compound_antecedent(self):
-        self.compare_potential_pair('Я видел Иванову Лену. Он был там', 3, True, 5, 0,
-                                    excluded_nlps=['core_news_sm', 'core_news_md'])
+        self.compare_potential_pair('Я видел Иванову Анну. Он был там', 3, True, 5, 0)
 
     def test_potential_pair_possessive_in_genitive_phrase(self):
         self.compare_potential_pair('Мужчина и его коллега', 0, False, 2, 2)
@@ -454,8 +451,7 @@ class RussianRulesTest(unittest.TestCase):
         self.compare_potential_pair('Мужчина и ее коллега', 0, False, 2, 0)
 
     def test_potential_pair_with_definite_adjective(self):
-        self.compare_potential_pair('Мужчина и тот коллега', 0, False, 2, 0,
-                                    excluded_nlps=['core_news_sm'])
+        self.compare_potential_pair('Мужчина и тот коллега', 0, False, 2, 0)
 
     def test_potential_pair_with_substantive_definite_adjective(self):
         self.compare_potential_pair('Я видел его. Тот был там', 2, False, 4, 2)
@@ -495,8 +491,7 @@ class RussianRulesTest(unittest.TestCase):
         self.compare_potential_pair('В здании КГБ его приняли на работу', 2, False, 3, 0)
 
     def test_potential_pair_with_thats_all_construction(self):
-        self.compare_potential_pair('Минусы есть, и все', 0, False, 4, 0,
-                                    excluded_nlps=['core_news_sm', 'core_news_lg'])
+        self.compare_potential_pair('Минусы есть, и все', 0, False, 4, 0)
 
     def test_potential_pair_with_plays_role_construction(self):
         self.compare_potential_pair('Работа играет важную роль. Она приносит доход', 3, False, 5, 0)
@@ -525,7 +520,7 @@ class RussianRulesTest(unittest.TestCase):
 
     def test_potential_pair_subject_in_instrumental_case_one_referring_pronoun_same_gender_2(self):
         self.compare_potential_pair('Мужчина с портфелем, из которого была видна книга', 0, False,
-                                    5, 0)
+                                    5, 0, excluded_nlps=['core_news_md'])
 
     def test_potential_pair_pronouns_different_person(self):
         self.compare_potential_pair('Мы шли. Они бежали', 0, False, 3, 0)
@@ -634,7 +629,7 @@ class RussianRulesTest(unittest.TestCase):
 
     def test_potental_pair_complex_substantive_object_2(self):
         self.compare_potential_pair('Книга была написана писателем любителем, который гулял',
-                                    4, False, 6, 0, excluded_nlps=['core_news_md'])
+                                    4, False, 6, 0, excluded_nlps=['core_news_md', 'core_news_sm'])
 
     def test_potential_pair_shorten_noun_with_position_semantics(self):
         self.compare_potential_pair('Акад. Петров был в парке. Он гулял', 0, False, 7, 0)
@@ -649,8 +644,7 @@ class RussianRulesTest(unittest.TestCase):
         self.compare_potential_pair('Книги о парках, в которых гуляли', 0, False, 5, 0)
 
     def test_potential_pair_substantive_adverbial_before_referred(self):
-        self.compare_potential_pair('На книге обложка, которая была красной', 2, False, 4, 2,
-                                    excluded_nlps=['core_news_sm'])
+        self.compare_potential_pair('На книге обложка, которая была красной', 2, False, 4, 2)
 
     def test_potential_pair_substantive_adverbial_before_referred_2(self):
         self.compare_potential_pair('На книге обложка, которая была красной', 1, False, 4, 0)
@@ -668,7 +662,8 @@ class RussianRulesTest(unittest.TestCase):
         self.compare_potential_pair('Мы довольны нами', 0, False, 2, 2)
 
     def test_potential_pair_subject_and_object_same_person_2(self):
-        self.compare_potential_pair('Вы довольны вами', 0, False, 2, 2)
+        self.compare_potential_pair('Вы довольны вами', 0, False, 2, 2,
+                                    excluded_nlps=['core_news_sm'])
 
     def test_potential_pair_subject_with_substantive_possesive_adjective(self):
         self.compare_potential_pair('Книга мужчины, которую тот читал', 1, False, 4, 2)
@@ -702,6 +697,19 @@ class RussianRulesTest(unittest.TestCase):
 
     def test_potential_pair_nmod_conjuction_with_reflexive_pronoun_2(self):
         self.compare_potential_pair('Кошка c собакой преследовали себя', 2, False, 4, 2)
+
+    def test_first_second_person_conjuction(self):
+        self.compare_potential_pair('Я и ты в парке. Мы гуляли', 0, False, 6, 2)
+
+    def test_first_second_person_conjuction_2(self):
+        self.compare_potential_pair('Я и ты в парке. Мы гуляли', 2, False, 6, 2)
+
+    def test_first_second_person_conjuction_control(self):
+        self.compare_potential_pair('Я и ты в парке. Они гуляли', 0, False, 6, 0)
+
+    def test_first_second_person_conjuction_control_2(self):
+        self.compare_potential_pair('Я и ты в парке. Они гуляли', 2, False, 6, 0)
+
 
     def compare_potential_reflexive_pair(self, doc_text, referred_index, include_dependent_siblings,
                                          referring_index, expected_truth, expected_reflexive_truth,
@@ -774,4 +782,7 @@ class RussianRulesTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    suppress_text = io.StringIO()
+    sys.stdout = suppress_text
     unittest.main()
+    sys.stdout = sys.__stdout__
